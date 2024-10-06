@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="FR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link
+      href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css"
+      rel="stylesheet"dah
+    />
+    <script src="/static/js/script.js" defer></script>
+  </head>
+
+  <body>
+    <div class="sidebar">
+      <div class="username">
+        <span id="cliqueUser">username</span>
+      </div>
+      <ul>
+        <li><a href="#section1">Gestion data</a></li>
+        <li><a href="#section2">Gestion dossier</a></li>
+        <li><a href="#section3">Planning</a></li>
+        <li><a href="#section4">Suivie</a></li>
+        <li><a href="#section5">administration</a></li>
+      </ul>
+    </div>
+    <div class="content">
+      <div class="classA">
+        <div class="forms1" id="formulaireU">
+          <div class="LIGN1">
+            <button id="closeBtnU"><i class="bx bxs-x-circle"></i></button>
+          </div>
+          <div class="contenux">
+            <input type="text" id="myJter" placeholder="Nom utilisateur" />
+            <input type="text" id="mdp" placeholder="mot de passe" />
+          </div>
+          <div class="button1">
+            <button>Modifier</button>
+            <button>Enregistrer</button>
+          </div>
+        </div>
+      </div>
+      <section id="section1" class="active">
+        <h2>Gestion DATA</h2>
+        <hr />
+        <div class="CONTENUE">
+          <div class="FORMULAIRE">
+            <form action="/add-customer" method="post">
+
+            <div class="first_line">
+              <input
+                type="text"
+                id="numero_sim"
+                name="customer-number"
+                placeholder="Numéro SIM"
+                required="numero"
+              />
+              <input
+                type="number"
+                id="volume"
+                name="data"
+                placeholder="Volume en Go"
+                step="5"
+                required=""
+              />
+              <input
+                type="text"
+                id="nomdusite"
+                name="site-name"
+                placeholder="Nom du site"
+                required="numero"
+              />
+            </div>
+
+            <div class="second_line">
+              <div class="carre1">
+                <input
+                  type="text"
+                  id="nomclient"
+                  name="customer-name"
+                  placeholder="Nom client"
+                  required=""
+                />
+                <input
+                  type="text"
+                  id="numero_sim"
+                  name="internet-f"
+                  placeholder="Fournisseur"
+                  required=""
+                />
+              </div>
+              <button type="submit">Enregistrer</button>
+              <div class="carre2">
+                <input
+                  type="date"
+                  id="date_recharge"
+                  name="date-re"
+                  required=""
+                />
+              </div>
+            </form>
+            </div>
+            
+          </div>
+          <div class="espacefiltres">
+            <button id="filtresBtn">filtres</button>
+
+            <div class="autres" id="autres">
+              <button>Ordonné</button>
+              <button>E2C</button>
+              <button>MUCODEC</button>
+              <button>Arc</button>
+            </div>
+          </div>
+
+          <div class="table-container">
+            <table id="myTable">
+              <thead>
+                <tr>
+                  <th>N</th>
+                  <th>Sites</th>
+                  <th>Numéro SIM</th>
+                  <th>Client</th>
+                  <th>Volume (Go)</th>
+                  <th>Date de Recharge</th>
+                  <th>Date d'Expiration</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Ajoutez vos données ici -->
+                <!-- Ajoutez autant de lignes que nécessaire -->
+                {{ range . }}
+                  <tr>
+                    <td>{{ .Customer_id }}</td>
+                    <td>{{ .Site_name }}</td>
+                    <td>{{ .Number_name }}</td>
+                    <td>{{ .Customer_name }}</td>
+                    <td>{{ .Volume }}</td>
+                    <td>{{ .Date_re }}</td>
+                    <td>{{ .Date_exp }}</td>
+                  </tr>
+                {{ end }}
+              </tbody>
+            </table>
+          </div>
+
+          <div id="form-container">
+            <div class="fidst">
+              <button id="Btnfermer">fermer</button>
+            </div>
+            <h2>Modifier les informations</h2>
+            <form id="myForm" action="/update-customer" method="post">
+
+
+              <label for="site">site:</label><br />
+              <input type="text" id="site" name="site-name" class="disabled" /><br />
+              <label for="age">numero:</label><br />
+              <input
+                type="text"
+                id="numero"
+                name="customer-number"
+                class="disabled"
+              /><br />
+              <label for="email">client:</label><br />
+              <input
+                type="text"
+                id="client"
+                name="customer-name"
+                class="disabled"
+              /><br /><br />
+              <label for="text">volume:</label><br />
+              <input
+                type="text"
+                id="volumes"
+                name="volume"
+                class="disabled"
+              /><br /><br />
+              <label for="text">recharge:</label><br />
+              <input
+                type="date"
+                id="recharge"
+                name="date-re"
+                class="disabled"
+              /><br /><br />
+              <label for="email">Expiration:</label><br />
+              <input
+                type="date"
+                id="expiration"
+                name="date-exp"
+                class="disabled"
+              /><br /><br />
+
+              {{ range . }}
+                <input type="text" name="customer-id" id="customer-id" value="{{ .Customer_id }}" hidden/>
+                <input type="text" name="site-id" id="site-id" value="{{ .Site_id }}" hidden/>
+                <input type="text" name="recharge-id" id="recharge-id" value="{{ .Recharge_id }}" hidden/>
+                <input type="text" name="number-id" id="number-id" value="{{ .Number_id }}" hidden/>
+              {{end }}
+
+              <div class="BOUTTONS">
+                <button type="submit">enregistrer</button>
+                <button id="modifyButton">Modifier</button>
+                <button>supprimer</button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </section>
+      <section id="section2">
+        <h2>Gestion dossier</h2>
+        <hr />
+        <div class="CONTENUE">
+          <div class="ROWX1">
+            <button id="newdossier">nouveau dossier</button>
+            <div class="ajout" id="ajoutclient">
+              <div class="formulaireX">
+                <div class="LIGNE1">
+                  <button id="closeBtn"><i class="bx bxs-x-circle"></i></button>
+                </div>
+                <div class="ligne2">
+                  <h2>Nouveau dossier</h2>
+                  <hr />
+
+                  <div id="step1">
+                    <div class="formulation">
+                      <div class="imageview">
+                        <img
+                          id="preview"
+                          src="#"
+                          alt="Image preview"
+                          style="
+                            display: none;
+                            max-width: 200px;
+                            max-height: 200px;
+                            object-fit: cover;
+                          "
+                        /><br /><br />
+                        <input
+                          type="file"
+                          id="image"
+                          accept="image/*"
+                          onchange="previewImage(event)"
+                        /><br /><br />
+                      </div>
+
+                      <div class="lesChamps">
+                        <h2>1</h2>
+                        <input
+                          type="text"
+                          id="nomsociete"
+                          placeholder="Nom du prospect"
+                        /><br /><br />
+                        <select id="Statut_concerne" name="source_prospect">
+                          <option value="Prospect">Prospect</option>
+                          <option value="Client">Client</option></select
+                        ><br /><br />
+                        <button onclick="nextStep()">Suivant</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div id="step2" style="display: none">
+                    <h2>2</h2>
+
+                    <div class="forms">
+                      <input
+                        type="text"
+                        id="num_reference"
+                        placeholder="numero num_reference"
+                      /><br /><br />
+                      <input
+                        type="text"
+                        id="secteur"
+                        placeholder="secteur d'activite"
+                      /><br /><br />
+                      <select id="commercial" name="nom_commercial">
+                        <option value="commercial">Azure Ngambara</option>
+                        <option value="commercial">Ambroise Noumazalaye</option>
+                        <option value="commercial">Prince Mbakani</option>
+                        <option value="commercial">Van Malonga</option>
+                        <option value="commercial">Ausone Malonga</option>
+                        <option value="commercial">Aurel Pouele</option>
+                        <option value="commercial">Naomie Senga</option>
+                        <option value="commercial">
+                          Harley Tsomp Ngouala
+                        </option></select
+                      ><br /><br />
+                    </div>
+
+                    <div class="bou">
+                      <button onclick="prevStep()">Précédent</button>
+                      <button onclick="nextStep()">Suivant</button>
+                    </div>
+                  </div>
+
+                  <div id="step3" style="display: none">
+                    <h2>3</h2>
+
+                    <div class="forms">
+                      <input
+                        type="text"
+                        id="contact"
+                        placeholder="contact prospect"
+                      /><br /><br />
+                      <select id="statut_actuel" name="statut_actuel">
+                        <option value="rdv1_a_fixer">RDV1 à fixer</option>
+                        <option value="rdv1_pris">RDV1 Pris</option>
+                        <option value="devis_remis_negociation">
+                          Devis Remis-Négo
+                        </option>
+                        <option value="signe_a_valider">Signé-A valider</option>
+                        <option value="signe_valide">Signé-Validé</option>
+                        <option value="signe_annule">Signé-Annulé</option>
+                        <option value="sans_suite_abandonne">
+                          Sans suite-Abandonné
+                        </option>
+                        <option value="perdu">Perdu</option>
+                        <option value="en_attente">En attente</option>
+                      </select>
+                      <input
+                        type="date"
+                        id="date_contact"
+                        name="date_contact"
+                        required
+                      />
+                    </div>
+
+                    <div class="bou">
+                      <button onclick="prevStep()">Précédent</button>
+                      <button onclick="enregistrer()">Enregistrer</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="espacefiltres">
+            <button id="filtresBtnd">filtres</button>
+            <div class="autres" id="autres1">
+              <button>en cours</button>
+              <button>Clients</button>
+              <button>Prospect</button>
+              <button>ordonné</button>
+            </div>
+
+            <!-- Ajout de la div pour le formulaire de modification -->
+            <div id="modificationForm" class="hidden">
+              <div class="CLOSEFORM">
+                <button id="closeBtnMD">
+                  <i class="bx bxs-x-circle"></i>
+                </button>
+              </div>
+              <h2>Modifier le dossier</h2>
+              <label for="nomsociete">Nom société:</label>
+              <input type="text" id="inputNomSociete" />
+              <label for="Reference">Référence:</label>
+              <input type="text" id="inputReference" />
+              <label for="nomcommercial">Commercial:</label>
+              <input type="text" id="inputNomCommercial" />
+              <label for="secteur">Secteur d'activité:</label>
+              <input type="text" id="inputSecteur" />
+              <label for="contact">Contact:</label>
+              <input type="text" id="inputContact" />
+              <label for="statut">Statut dossier:</label>
+              <input type="text" id="inputStatut" />
+
+              <div class="BOU">
+                <button id="enregistrer">Enregistrer</button>
+                <button id="modifier">Modifier</button>
+                <button id="supprimer">Supprimer</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="divdossier">
+            <div class="screenDOSSIER">
+              <div class="listedossier">
+                <!-- Les 9 divs à l'intérieur de l'écran -->
+                <div class="boxx" id="dossierx">
+                  <div class="lign1">
+                    <div class="carre">Image</div>
+                    <div class="contenueDossier">
+                      <div class="row1">
+                        <label for="nomsociete">Nom societe:</label>
+                        <label for="Reference">Reference:</label>
+                        <label for="nomcommercial">commercial:</label>
+                      </div>
+
+                      <div class="row1">
+                        <span id="nomsociete">mucodec </span>
+                        <span id="Reference">oijfdjisookdfnbdf5645 </span>
+                        <span id="commercial">testing</span>
+                      </div>
+
+                      <div class="row1">
+                        <label for="secteur">Secteur d'activite:</label>
+                        <label for="contact">contact:</label>
+                        <label for="Statut">Statut dossier:</label>
+                      </div>
+
+                      <div class="row1">
+                        <span id="Secteur">Banque</span>
+                        <span id="contact"> mata DSI</span>
+                        <span id="statut"> signé</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="boxx">
+                  <div class="lign1">
+                    <div class="carre">Image</div>
+                    <div class="contenueDossier">
+                      <div class="row1">
+                        <label for="nomsociete">Nom societe:</label>
+                        <label for="Reference">Reference:</label>
+                        <label for="nomcommercial">commercial:</label>
+                      </div>
+
+                      <div class="row1">
+                        <span id="nomsociete">ARC </span>
+                        <span id="Reference">oijfdjisookdfnbdf5645 </span>
+                        <span id="commercial">Van MALONGA </span>
+                      </div>
+
+                      <div class="row1">
+                        <label for="secteur">Secteur d'activite:</label>
+                        <label for="contact">contact:</label>
+                        <label for="Statut">Statut dossier:</label>
+                      </div>
+
+                      <div class="row1">
+                        <span id="Secteur"> Energie</span>
+                        <span id="contact"> Alfred Mando DSI</span>
+                        <span id="statut"> 1 ER rendez-vous</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="boxx">
+                  <div class="lign1">
+                    <div class="carre">Image</div>
+                    <div class="contenueDossier">
+                      <div class="row1">
+                        <label for="nomsociete">Nom societe:</label>
+                        <label for="Reference">Reference:</label>
+                        <label for="nomcommercial">commercial:</label>
+                      </div>
+
+                      <div class="row1">
+                        <span id="nomsociete">SOCIETE GENERAL </span>
+                        <span id="Reference">oijfdjisookdfnbdf5645 </span>
+                        <span id="commercial">Van MALONGA </span>
+                      </div>
+
+                      <div class="row1">
+                        <label for="secteur">Secteur d'activite:</label>
+                        <label for="contact">contact:</label>
+                        <label for="Statut">Statut dossier:</label>
+                      </div>
+
+                      <div class="row1">
+                        <span id="Secteur"> Energie</span>
+                        <span id="contact"> Alfred Mando DSI</span>
+                        <span id="statut"> 1 ER rendez-vous</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="boxx">
+                  <div class="lign1">
+                    <div class="carre">Image</div>
+                    <div class="contenueDossier">
+                      <div class="row1">
+                        <label for="nomsociete">Nom societe:</label>
+                        <label for="Reference">Reference:</label>
+                        <label for="nomcommercial">commercial:</label>
+                      </div>
+
+                      <div class="row1">
+                        <span id="nomsociete"
+                          >energie electrique du congo
+                        </span>
+                        <span id="Reference">oijfdjisookdfnbdf5645 </span>
+                        <span id="commercial">Van MALONGA </span>
+                      </div>
+
+                      <div class="row1">
+                        <label for="secteur">Secteur d'activite:</label>
+                        <label for="contact">contact:</label>
+                        <label for="Statut">Statut dossier:</label>
+                      </div>
+
+                      <div class="row1">
+                        <span id="Secteur"> Energie</span>
+                        <span id="contact"> Alfred Mando DSI</span>
+                        <span id="statut"> 1 ER rendez-vous</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="boxx">
+                  <div class="lign1">
+                    <div class="carre">Image</div>
+                    <div class="contenueDossier">
+                      <div class="row1">
+                        <label for="nomsociete">Nom societe:</label>
+                        <label for="Reference">Reference:</label>
+                        <label for="nomcommercial">commercial:</label>
+                      </div>
+
+                      <div class="row1">
+                        <span id="nomsociete"
+                          >energie electrique du congo
+                        </span>
+                        <span id="Reference">oijfdjisookdfnbdf5645 </span>
+                        <span id="commercial">Van MALONGA </span>
+                      </div>
+
+                      <div class="row1">
+                        <label for="secteur">Secteur d'activite:</label>
+                        <label for="contact">contact:</label>
+                        <label for="Statut">Statut dossier:</label>
+                      </div>
+
+                      <div class="row1">
+                        <span id="Secteur"> Energie</span>
+                        <span id="contact"> Alfred Mando DSI</span>
+                        <span id="statut"> 1 ER rendez-vous</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="section3">
+        <h2>Section 3</h2>
+        <p>Content of section 3...</p>
+      </section>
+      <section id="section4">
+        <h2>Gestion des incidents</h2>
+        <hr />
+        <div class="incidContenue">
+          <div class="incidForm">
+            <div class="row1inc">
+              <input type="date" />
+              <select name="cote" id="">
+                <option value="option1">MUCODEC</option>
+                <option value="option2">linksystem</option>
+              </select>
+
+              <input type="text" placeholder="nom du site" />
+            </div>
+
+            <div class="row2inc">
+              <button>Enregistrer</button>
+              <textarea name="description" id="" cols="30" rows="3"> </textarea>
+              <button id="interventionBTN">intervention</button>
+            </div>
+
+            <div class="row3inc">
+              <div class="ficheintervention" id="intervention">
+                <div class="divinc">
+                  <button id="closeBtninc">
+                    <i class="bx bxs-x-circle"></i>
+                  </button>
+                </div>
+                <input type="date" />
+                <input type="text" id="intervenant" placeholder="intervenant" />
+                <textarea
+                  name="détails"
+                  id="détailsMission"
+                  cols="30"
+                  rows="3"
+                ></textarea>
+
+                <div class="bou">
+                  <button>Ajouter</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="incidTABLE">
+            <div class="table-container2">
+              <table id="myTable1">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Coté</th>
+                    <th>Site</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Ajoutez vos données ici -->
+                  <tr>
+                    <td>26/03/2024</td>
+                    <td>MUCODEC</td>
+                    <td>Boundji</td>
+                    <td>problème energie</td>
+                  </tr>
+                  <tr>
+                    <td>26/03/2024</td>
+                    <td>linksystem</td>
+                    <td>Djambala</td>
+                    <td>Expiration des DATAS</td>
+                  </tr>
+                  <tr>
+                    <td>06/03/2024</td>
+                    <td>MUCODEC</td>
+                    <td>NKAYI</td>
+                    <td>mauvaise configuration du tunnels</td>
+                  </tr>
+                  <tr>
+                    <td>2/03/2024</td>
+                    <td>MUCODEC</td>
+                    <td>KINKALA</td>
+                    <td>problème d'energie</td>
+                  </tr>
+                  <tr>
+                    <td>26/03/2024</td>
+                    <td>MUCODEC</td>
+                    <td>Madingou</td>
+                    <td>Probleme d'energie</td>
+                  </tr>
+                  <tr>
+                    <td>08/03/2024</td>
+                    <td>MUCODEC</td>
+                    <td>Dolisie</td>
+                    <td>Probéme d'energie</td>
+                  </tr>
+                  <tr>
+                    <td>14/03/2024</td>
+                    <td>linksystem</td>
+                    <td>Madingou</td>
+                    <td>Probleme d'energie</td>
+                  </tr>
+                  <tr>
+                    <td>16/03/2024</td>
+                    <td>MUCODEC</td>
+                    <td>EWO</td>
+                    <td>Probleme d'energie</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                    <td>987654321</td>
+                    <td>Client 2</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                    <td>987654321</td>
+                    <td>Client 2</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                    <td>987654321</td>
+                    <td>Client 2</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                    <td>987654321</td>
+                    <td>Client 2</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                    <td>987654321</td>
+                    <td>Client 2</td>
+                  </tr>
+                  <!-- Ajoutez autant de lignes que nécessaire -->
+                </tbody>
+              </table>
+            </div>
+            <div class="btns">
+              <button>supprimer</button>
+              <button>modifier</button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="section5">
+        <h2>Gestion des utilisateurs</h2>
+        <hr />
+
+        <div class="espacegestion">
+          <div class="tableauadmin">
+            <div class="table-container1">
+              <table id="myTable1">
+                <thead>
+                  <tr>
+                    <th>Nom de l'agent</th>
+                    <th>Prenom</th>
+                    <th>nom d'utilisateur</th>
+                    <th>mot de passe</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Ajoutez vos données ici -->
+                  <tr>
+                    <td>1</td>
+                    <td>Site 1</td>
+                    <td>123456789</td>
+                    <td>Client 1</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                    <td>987654321</td>
+                    <td>Client 2</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                    <td>987654321</td>
+                    <td>Client 2</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                    <td>987654321</td>
+                    <td>Client 2</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                    <td>987654321</td>
+                    <td>Client 2</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                    <td>987654321</td>
+                    <td>Client 2</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                    <td>987654321</td>
+                    <td>Client 2</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                    <td>987654321</td>
+                    <td>Client 2</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                    <td>987654321</td>
+                    <td>Client 2</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                    <td>987654321</td>
+                    <td>Client 2</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                    <td>987654321</td>
+                    <td>Client 2</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                    <td>987654321</td>
+                    <td>Client 2</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                    <td>987654321</td>
+                    <td>Client 2</td>
+                  </tr>
+                  <!-- Ajoutez autant de lignes que nécessaire -->
+                </tbody>
+              </table>
+            </div>
+            <div class="espacebouton1">
+              <button id="sj!">Modifier</button>
+              <button>supprimer</button>
+            </div>
+          </div>
+
+          <div class="ajoutagent">
+            <h2>Ajouter un utilisateur</h2>
+            <hr />
+            <div class="for">
+              <input type="text" id="nomagents" placeholder="nom de l'agent" />
+              <input type="text" id="nomagents" placeholder="Prenom" />
+              <input
+                type="text"
+                id="nomutilisateur"
+                placeholder="nom d'utilisateur"
+              />
+              <input
+                type="password"
+                id="motdepasse"
+                placeholder="mot de passe"
+              />
+
+              <button>Enregistrer</button>
+            </div>
+          </div>
+        </div>
+
+        <h2>Gestion des clients</h2>
+        <hr />
+
+        <div class="espacegestion">
+          <div class="tableauadmin">
+            <div class="table-container1">
+              <table id="myTable1">
+                <thead>
+                  <tr>
+                    <th>Nom du client</th>
+                    <th>Adresse</th>
+                    <th>contact</th>
+                    <th>seceur d'activité</th>
+                    <th>mail</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Ajoutez vos données ici -->
+                  <tr>
+                    <td>1</td>
+                    <td>Site 1</td>
+                    <td>123456789</td>
+                    <td>Client 1</td>
+                    <td>Client 1</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                    <td>987654321</td>
+                    <td>Client 2</td>
+                    <td>Client 1</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                    <td>987654321</td>
+                    <td>Client 2</td>
+                    <td>Client 1</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                    <td>987654321</td>
+                    <td>Client 2</td>
+                    <td>Client 1</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                    <td>987654321</td>
+                    <td>Client 2</td>
+                    <td>Client 1</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                    <td>987654321</td>
+                    <td>Client 2</td>
+                    <td>Client 1</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                    <td>987654321</td>
+                    <td>Client 2</td>
+                    <td>Client 1</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                    <td>987654321</td>
+                    <td>Client 2</td>
+                    <td>Client 1</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                    <td>987654321</td>
+                    <td>Client 2</td>
+                    <td>Client 1</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                    <td>987654321</td>
+                    <td>Client 2</td>
+                    <td>Client 1</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                    <td>987654321</td>
+                    <td>Client 2</td>
+                    <td>Client 1</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                    <td>987654321</td>
+                    <td>Client 2</td>
+                    <td>Client 1</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                    <td>987654321</td>
+                    <td>Client 2</td>
+                    <td>Client 1</td>
+                  </tr>
+                  <!-- Ajoutez autant de lignes que nécessaire -->
+                </tbody>
+              </table>
+            </div>
+            <div class="espacebouton1">
+              <button id="sj!">Modifier</button>
+              <button>supprimer</button>
+            </div>
+          </div>
+
+          <div class="ajoutagent">
+            <h2>Ajouter un client</h2>
+            <hr />
+            <div class="for">
+              <input type="text" id="nomclients" placeholder="nom du client" />
+              <input type="text" id="adresse" placeholder="Adresse" />
+              <input type="text" id="contact" placeholder="contact" />
+              <input
+                type="text"
+                id="contact"
+                placeholder="secteur d'activité"
+              />
+              <input type="mail" id="mail" placeholder="Mail" />
+
+              <button>Enregistrer</button>
+            </div>
+          </div>
+        </div>
+
+        <h2>Gestion des commercials</h2>
+        <hr />
+
+        <div class="espacegestion">
+          <div class="tableauadmin">
+            <div class="table-container1">
+              <table id="myTable1">
+                <thead>
+                  <tr>
+                    <th>Nom de l'agent</th>
+                    <th>Prenom</th>
+                    <th>nom d'utilisateur</th>
+                    <th>mot de passe</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Ajoutez vos données ici -->
+                  <tr>
+                    <td>1</td>
+                    <td>Site 1</td>
+                    <td>123456789</td>
+                    <td>Client 1</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                    <td>987654321</td>
+                    <td>Client 2</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                    <td>987654321</td>
+                    <td>Client 2</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                    <td>987654321</td>
+                    <td>Client 2</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                    <td>987654321</td>
+                    <td>Client 2</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                    <td>987654321</td>
+                    <td>Client 2</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                    <td>987654321</td>
+                    <td>Client 2</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                    <td>987654321</td>
+                    <td>Client 2</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                    <td>987654321</td>
+                    <td>Client 2</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                    <td>987654321</td>
+                    <td>Client 2</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                    <td>987654321</td>
+                    <td>Client 2</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                    <td>987654321</td>
+                    <td>Client 2</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                    <td>987654321</td>
+                    <td>Client 2</td>
+                  </tr>
+                  <!-- Ajoutez autant de lignes que nécessaire -->
+                </tbody>
+              </table>
+            </div>
+            <div class="espacebouton1">
+              <button id="sj!">Modifier</button>
+              <button>supprimer</button>
+            </div>
+          </div>
+
+          <div class="ajoutagent">
+            <h2>Ajouter un utilisateur</h2>
+            <hr />
+            <div class="for">
+              <input type="text" id="nomagents" placeholder="nom de l'agent" />
+              <input type="text" id="nomagents" placeholder="Prenom" />
+              <input
+                type="text"
+                id="nomutilisateur"
+                placeholder="nom d'utilisateur"
+              />
+              <input
+                type="password"
+                id="motdepasse"
+                placeholder="mot de passe"
+              />
+
+              <button>Enregistrer</button>
+            </div>
+          </div>
+        </div>
+
+        <h2>Gestion des services</h2>
+        <hr />
+
+        <div class="espacegestion">
+          <div class="tableauadmin">
+            <div class="table-container1">
+              <table id="myTable1">
+                <thead>
+                  <tr>
+                    <th>Nom</th>
+                    <th>description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Ajoutez vos données ici -->
+                  <tr>
+                    <td>1</td>
+                    <td>Site 1</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Site 2</td>
+                  </tr>
+                  <!-- Ajoutez autant de lignes que nécessaire -->
+                </tbody>
+              </table>
+            </div>
+            <div class="espacebouton1">
+              <button id="sj!">Modifier</button>
+              <button>supprimer</button>
+            </div>
+          </div>
+
+          <div class="ajoutagent">
+            <h2>Ajouter un services</h2>
+            <hr />
+            <div class="for">
+              <input
+                type="text"
+                id="nomservices"
+                placeholder="nom du service"
+              />
+
+              <textarea
+                name="déscription"
+                id="description"
+                cols="30"
+                rows="3"
+              ></textarea>
+
+              <button id="desc">Enregistrer</button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="section6"></section>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
